@@ -1,3 +1,8 @@
 export default () => {
-  return <div>index page</div>;
+  return (
+    <div>
+      <span>123</span>
+      index page
+    </div>
+  );
 };
