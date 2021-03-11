@@ -8,3 +8,4 @@ yarn.lock
 package.json
 .gitignore
 tsconfig.json
+.husky
