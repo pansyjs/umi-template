@@ -61,7 +61,6 @@
   },
   {
     "emoji": "🔥",
-    "code": ":fire:",
     "description": "删除代码或文件",
     "name": "remove"
   },
