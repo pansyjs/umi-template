@@ -1,30 +1,23 @@
-import inquirer from 'inquirer';
-import chalk from 'chalk';
 import execa from 'execa';
+import inquirer from 'inquirer';
+import { CommitInfo } from './types';
+import { getErrorAndLog, isStageEmpty } from './utils';
 
 const emojiConfig = require('../commit-types.json');
 
-interface CommitInfo {
-  type: string;
-  scope?: string;
-  subject: string;
-  body?: string;
-  footer?: string;
-}
+const { printErrorAndExit, logStep } = getErrorAndLog(`commit`);
 
-function printErrorAndExit(message) {
-  console.error(chalk.red(`>> commit: ${message}`));
-  process.exit(1);
-}
-
-export function logStep(name) {
-  console.log(`${chalk.gray('>> commit:')} ${chalk.magenta.bold(name)}`);
-}
-
-function isStageEmpty() {
-  return execa.sync('git', ['diff', '--cached']).stdout === '';
-}
-
+/**
+ * 获取提交的信息
+ * @param info 需要解析的配置
+ * @returns 拼接的提交消息
+ * @example
+ *   🐛 fix(login): 修复登录按钮无法点击
+ *
+ *   详细的描述信息
+ *
+ *   Close #12
+ */
 const getCommitMessage = (info: CommitInfo) => {
   let message = `${info.type}`;
 
@@ -91,7 +84,7 @@ async function commit() {
   const reult: CommitInfo = await inquirer.prompt([
     {
       name: 'type',
-      message: '请选择提交类型:',
+      message: '请选择提交的类型:',
       type: 'list',
       choices: types,
       validate: (value: string) => {
@@ -103,12 +96,12 @@ async function commit() {
     },
     {
       name: 'scope',
-      message: '请输入提交范围:',
+      message: '请输入提交的范围:',
       type: 'input'
     },
     {
       name: 'subject',
-      message: '请输入提交简述:',
+      message: '请输入提交的描述:',
       type: 'input',
       validate: (value: string) => {
         if (value) {
@@ -119,12 +112,12 @@ async function commit() {
     },
     {
       name: 'body',
-      message: '请输入提交详细信息:',
+      message: '请输入提交的详细内容:',
       type: 'input'
     },
     {
       name: 'footer',
-      message: '请输入提交footer:',
+      message: '请输入提交的页脚:',
       type: 'input'
     }
   ]);
@@ -138,16 +131,20 @@ async function commit() {
   logStep(`提交代码`);
 
   // 提交代码
-  await execa.sync('git', ['commit', '--message', `${message}`]);
-
-  logStep(`git push`);
-
-  // 提交代码到远端
-  await execa.sync('git', ['push']);
+  // await execa.sync('git', ['commit', '--message', `${message}`]);
 
   logStep(`提交代码到远端`);
 
-  logStep(`提交成功`);
+  // 提交代码到远端
+  // await execa.sync('git', ['push']);
 }
 
-commit();
+commit()
+  .then(() => {
+    logStep(`提交成功`);
+    process.exit(0);
+  })
+  .catch(() => {
+    logStep(`提交失败`);
+    process.exit(0);
+  });
