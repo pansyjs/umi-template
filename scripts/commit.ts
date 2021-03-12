@@ -2,7 +2,7 @@ import inquirer from 'inquirer';
 import chalk from 'chalk';
 import execa from 'execa';
 
-const emojiConfig = require('../emoji.json');
+const emojiConfig = require('../commit-types.json');
 
 interface CommitInfo {
   type: string;
@@ -13,8 +13,12 @@ interface CommitInfo {
 }
 
 function printErrorAndExit(message) {
-  console.error(chalk.red(`commit >> ${message}`));
+  console.error(chalk.red(`>> commit: ${message}`));
   process.exit(1);
+}
+
+export function logStep(name) {
+  console.log(`${chalk.gray('>> commit:')} ${chalk.magenta.bold(name)}`);
 }
 
 function isStageEmpty() {
@@ -127,10 +131,23 @@ async function commit() {
 
   const message = getCommitMessage(reult);
 
-  // 提交代码
-  await execa.sync('git', ['commit', '--message', message]);
+  logStep(`提交信息`);
 
-  console.log(chalk.green('commit >> 提交成功'));
+  console.log(message);
+
+  logStep(`提交代码`);
+
+  // 提交代码
+  await execa.sync('git', ['commit', '--message', `${message}`]);
+
+  logStep(`git push`);
+
+  // 提交代码到远端
+  await execa.sync('git', ['push']);
+
+  logStep(`提交代码到远端`);
+
+  logStep(`提交成功`);
 }
 
 commit();

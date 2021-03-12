@@ -25,12 +25,17 @@
     "name": "ui"
   },
   {
+    "emoji": "📖",
+    "description": "文档相关",
+    "name": "docs"
+  },
+  {
     "emoji": "🔧",
     "description": "修改配置文件",
     "name": "config"
   },
   {
-    "emoji": "🏷️",
+    "emoji": "🏷️ ",
     "description": "添加或更新类型(Flow, TypeScript).",
     "name": "types"
   },
@@ -61,12 +66,12 @@
     "name": "remove"
   },
   {
-    "emoji": "🗑️",
+    "emoji": "🗑️ ",
     "description": "废弃或删除",
     "name": "disuse"
   },
   {
-    "emoji": "🐎 ",
+    "emoji": "🐎",
     "description": "性能优化",
     "name": "perf"
   },
@@ -192,7 +197,7 @@
   },
   {
     "emoji": "🍏",
-    "description":"修复 IOS 系统下的问题",
+    "description": "修复 IOS 系统下的问题",
     "name": "ios"
   },
   {
