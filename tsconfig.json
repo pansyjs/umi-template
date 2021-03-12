@@ -10,5 +10,10 @@
       "@@/*": ["./src/.umi/*"]
     }
   },
-  "exclude": ["node_modules", "dist", "src/.umi/*", "src/.umi-production/*"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "src/.umi/*",
+    "src/.umi-production/*"
+  ]
 }
