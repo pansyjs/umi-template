@@ -1,9 +1,8 @@
 import execa from 'execa';
 import inquirer from 'inquirer';
 import { CommitInfo } from './types';
+import commitTypes from '../commit-types.json';
 import { getErrorAndLog, isStageEmpty } from './utils';
-
-const emojiConfig = require('../commit-types.json');
 
 const { printErrorAndExit, logStep } = getErrorAndLog(`commit`);
 
@@ -31,12 +30,13 @@ const getCommitMessage = (info: CommitInfo) => {
     const bodys = info.body.split('\\n');
 
     const bodyMessage = bodys.reduce((prev, curr, index) => {
+      let msg = prev;
       if (index === 0) {
-        prev += `\n\n${curr}`;
+        msg += `\n\n${curr}`;
       } else {
-        prev += `\n${curr}`;
+        msg += `\n${curr}`;
       }
-      return prev;
+      return msg;
     }, '');
 
     message += bodyMessage;
@@ -46,12 +46,13 @@ const getCommitMessage = (info: CommitInfo) => {
     const footers = info.footer.split('\\n');
 
     const footerMessage = footers.reduce((prev, curr, index) => {
+      let msg = prev;
       if (index === 0) {
-        prev += `\n\n${curr}`;
+        msg += `\n\n${curr}`;
       } else {
-        prev += `\n${curr}`;
+        msg += `\n${curr}`;
       }
-      return prev;
+      return msg;
     }, '');
 
     message += footerMessage;
@@ -61,7 +62,7 @@ const getCommitMessage = (info: CommitInfo) => {
 };
 
 async function commit() {
-  const types = emojiConfig.map((item) => {
+  const types = commitTypes.map((item) => {
     const value = `${item.emoji} ${item.name}`;
     return {
       name: `${value}: ${item.description}`,
@@ -96,7 +97,7 @@ async function commit() {
     },
     {
       name: 'scope',
-      message: '请输入提交的范围:',
+      message: '请输入提交的范围(可选):',
       type: 'input'
     },
     {
@@ -112,12 +113,12 @@ async function commit() {
     },
     {
       name: 'body',
-      message: '请输入提交的详细内容:',
+      message: '请输入提交的详细内容(可选):',
       type: 'input'
     },
     {
       name: 'footer',
-      message: '请输入提交的页脚:',
+      message: '请输入提交的页脚(可选):',
       type: 'input'
     }
   ]);
@@ -131,12 +132,12 @@ async function commit() {
   logStep(`提交代码`);
 
   // 提交代码
-  // await execa.sync('git', ['commit', '--message', `${message}`]);
+  await execa.sync('git', ['commit', '--message', `${message}`]);
 
   logStep(`提交代码到远端`);
 
   // 提交代码到远端
-  // await execa.sync('git', ['push']);
+  await execa.sync('git', ['push']);
 }
 
 commit()
