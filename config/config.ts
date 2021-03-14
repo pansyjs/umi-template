@@ -13,8 +13,6 @@ export default defineConfig({
     antd: true,
     baseNavigator: true
   },
-  webpack5: {
-    lazyCompilation: {}
-  },
+  webpack5: {},
   dynamicImport: {}
 });
