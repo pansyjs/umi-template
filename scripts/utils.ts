@@ -3,7 +3,7 @@ import execa from 'execa';
 
 export function getErrorAndLog(prefix: string) {
   function logStep(name) {
-    console.log(`${chalk.gray('>> ${prefix}:')} ${chalk.magenta.bold(name)}`);
+    console.log(`${chalk.gray(`>> ${prefix}:`)} ${chalk.magenta.bold(name)}`);
   }
 
   function printErrorAndExit(message) {
