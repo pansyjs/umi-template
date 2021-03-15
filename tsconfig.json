@@ -5,6 +5,7 @@
     "lib": ["esnext", "dom"],
     "jsx": "react-jsx",
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "paths": {
       "@/*": ["./src/*"],
       "@@/*": ["./src/.umi/*"]

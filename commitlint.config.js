@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const emojiConfig = require('./commit-types.json');
 
 const typeEnum = emojiConfig.map((item) => `${item.emoji} ${item.name}`);

@@ -147,5 +147,5 @@ commit()
   })
   .catch(() => {
     logStep(`提交失败`);
-    process.exit(0);
+    process.exit(1);
   });

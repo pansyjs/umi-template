@@ -9,3 +9,4 @@ package.json
 .gitignore
 tsconfig.json
 .husky
+.commitlintrc.js
