@@ -9,6 +9,10 @@ module.exports = {
       version: 'detect'
     }
   },
-  globals: {},
+  globals: {
+    // 类型定义的全局命名空间
+    API: 'readonly',
+    NodeJS: 'readonly'
+  },
   rules: {}
 };
