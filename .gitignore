@@ -29,6 +29,8 @@ functions/*
 .umi
 .umi-production
 
+*.less.d.ts
+
 # screenshot
 screenshot
 .firebase

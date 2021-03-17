@@ -1,6 +1,24 @@
 import { Request, Response } from 'express';
 import { packResult } from './utils';
 
+function fetchCurrentUser(req: Request, res: Response) {
+  const authorization = req.headers?.authorization;
+  const token = authorization?.split(' ')?.[1];
+
+  if (token !== 'admin' && token !== 'user') {
+    res.status(401).send(packResult({ data: {}, code: 401 }));
+  }
+
+  res.send(
+    packResult({
+      data: {
+        name: 'Serati Ma',
+        age: 13
+      }
+    })
+  );
+}
+
 function fetchLogin(req: Request, res: Response) {
   const { password, username, type } = req.body;
   console.log(req.body);
@@ -37,5 +55,6 @@ function fetchLogin(req: Request, res: Response) {
 }
 
 export default {
-  'POST /api/user/login': fetchLogin
+  'POST /api/user/login': fetchLogin,
+  'GET /api/user/current': fetchCurrentUser
 };
