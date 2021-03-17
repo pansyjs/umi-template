@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const emojiConfig = require('./commit-types.json');
+const { DEFAULT_TYPES } = require('@walrus/commit/lib/config');
 
-const typeEnum = emojiConfig.map((item) => `${item.emoji} ${item.name}`);
+const typeEnum = DEFAULT_TYPES.map((item) => `${item.emoji} ${item.name}`);
 
 module.exports = {
   rules: {

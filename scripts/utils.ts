@@ -1,5 +1,4 @@
-import chalk from 'chalk';
-import execa from 'execa';
+import { chalk, execa } from '@walrus/cli-utils';
 
 export function getErrorAndLog(prefix: string) {
   function logStep(name) {
